@@ -1,0 +1,706 @@
+\documentclass[12pt,a4paper]{report}
+
+\usepackage[english,frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{fontspec}
+
+\usepackage{lmodern}
+\usepackage{fancyhdr}
+\usepackage[colorlinks=true,urlcolor=blue]{hyperref}
+\usepackage{xcolor,colortbl}
+\usepackage{geometry}
+\usepackage{multirow}
+\usepackage{fancyvrb}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{floatrow}
+\usepackage{acro}
+% probably a good idea for the nomenclature entries:
+\acsetup{first-style=short}
+
+% class `abbrev': abbreviations:
+\DeclareAcronym{lan}{
+  short = LAN ,
+  long  = Local Area Network ,
+  class = abbrev
+}
+\DeclareAcronym{wan}{
+  short = WAN ,
+  long  = Wide Area Network ,
+  class = abbrev
+}
+\DeclareAcronym{utp}{
+  short = UTP ,
+  long  = Unshielded Twisted Pair ,
+  class = abbrev
+}
+\DeclareAcronym{vlan}{
+  short = VLAN ,
+  long  = Virtual Local Area Network,
+  class = abbrev
+}
+\DeclareAcronym{stp}{
+  short = STP ,
+  long  = Spanning Tree Protocol ,
+  class = abbrev
+}
+\DeclareAcronym{vtp}{
+  short = VTP ,
+  long  = VLAN Trunking Protocol ,
+  class = abbrev
+}
+\DeclareAcronym{ospf}{
+  short = OSPF ,
+  long  = Open Shortest Path First,
+  class = abbrev
+}
+\DeclareAcronym{nat}{
+  short =  NAT,
+  long  = Network Address Translation ,
+  class = abbrev
+}
+\DeclareAcronym{pat}{
+  short =  PAT,
+  long  = Port Address Translation ,
+  class = abbrev
+}
+\DeclareAcronym{dhcp}{
+  short =  DHCP,
+  long  = Dynamic Host Configuration Protocol ,
+  class = abbrev
+}
+\DeclareAcronym{dns}{
+  short =  DNS,
+  long  = Domain Name System ,
+  class = abbrev
+}
+\DeclareAcronym{vpn}{
+  short =  VPN,
+  long  = Virtual Private Network ,
+  class = abbrev
+}
+\DeclareAcronym{ssh}{
+  short =  SSH,
+  long  = Secure shell,
+  class = abbrev
+}
+\DeclareAcronym{dmz}{
+  short =  DMZ,
+  long  = Demilitarized Zone,
+  class = abbrev
+}
+\DeclareAcronym{ppp}{
+  short =  PPP,
+  long  = Point-to-Point Protocol,
+  class = abbrev
+}
+\DeclareAcronym{acl}{
+  short =  ACL,
+  long  = Access Control List,
+  class = abbrev
+}
+
+\floatsetup[table]{capposition=top}
+\renewcommand{\arraystretch}{1.5}
+
+\makeatletter
+
+\newcommand\frontmatter{%
+	\cleardoublepage
+	%\@mainmatterfalse
+	\pagenumbering{roman}}
+
+\newcommand\mainmatter{%
+	\cleardoublepage
+	% \@mainmattertrue
+	\pagenumbering{arabic}}
+
+\newcommand\backmatter{%
+	\if@openright
+	\cleardoublepage
+	\else
+	\clearpage
+	\fi
+	% \@mainmatterfalse
+}
+
+\makeatother
+
+\renewcommand*{\FrenchLabelItem}{$\bullet$}
+
+
+
+\begin{document}
+	\frontmatter
+	%\interfootnotelinepenalty=10000
+	%\setlength{\headheight}{15.2pt}
+	\pagestyle{fancy}
+	\fancyhf{}
+	\fancyhf[HR]{\thepage}
+	\fancyhf[HL]{\leftmark}
+	\hyphenation{}
+	
+	\newgeometry{top=2cm,bottom=1cm}
+	
+	%=============page de garde==============================
+	\begin{titlepage}
+		
+		\begin{center}
+
+
+		\begin{minipage}{0.5\textwidth}
+
+		\begin{flushleft}
+		\includegraphics[width=4cm,height=3.2cm]{graphics/ensias.png}\\
+		\begin{flushleft}
+		 { \scriptsize  \'Ecole Nationale Supérieure \\[0.2cm]d’Informatique et d’Analyse\\ \hspace{10mm}des Systèmes  }
+
+		\end{flushleft}
+
+		 
+
+		\end{flushleft}
+
+		\end{minipage}
+		\begin{minipage}{0.4\textwidth}
+		\begin{flushright}
+		\includegraphics[width=4cm,height=3.2cm]{graphics/univ.png}\\
+		%{ \scriptsize  Facult\'e des Sciences Juridiques, \\ \'Economiques et Sociales - Oujda  }
+		\end{flushright}
+
+		\end{minipage}\\[3cm]
+
+
+
+		{\normalsize Ingénierie web et informatique mobile }\\[0.5cm]
+
+		{\normalsize Rapport du projet intégré S4 1\up{ère} Partie}\\[0.5cm]
+
+		% Title
+		\rule{\linewidth}{0.5mm} \\[0.4cm]
+		%{ \large \bfseries Application mobile pour la réservation de véhicule sous la plateforme ScreenDy \\[0.4cm] }
+		{ \large \bfseries Conception et Implémentation des réseaux IP\\[0.4cm] }
+		\rule{\linewidth}{0.5mm} \\[3cm]
+
+		% Author and supervisor
+		\noindent
+		\begin{minipage}{0.4\textwidth}
+		  \begin{flushleft} \small
+		    \emph{Réalisé par :}\\
+		
+		      Aymen \textsc{CHLA}\\
+		      Youssef \textsc{Faraby}\\
+		  \end{flushleft}
+		\end{minipage}%
+		\begin{minipage}{0.4\textwidth}
+		  \begin{flushright} \small
+		    \emph{Encadré par :} \\
+		    M.~Mohammed \textsc{EL KOUTBI}\\
+		    M.~Mostafa \textsc{BELKASMI}\\  
+		  \end{flushright}
+		\end{minipage}\\[4cm]
+
+		\vfill
+
+		% Bottom of the page
+		{\large \slshape Année Universitaire 2017 - 2018}
+
+		\end{center}
+	\end{titlepage}
+	%=======================fin page de garde====================
+	
+	\restoregeometry
+	\normalsize
+	\clearpage
+	\mainmatter
+
+
+	%============blank  page==========
+	\begingroup
+	  \pagestyle{empty}
+	  \null
+	  \newpage
+	\endgroup
+	%============fin blank page==========
+	
+	
+	
+
+	%=============remerciement==============
+	\chapter*{Remerciements}
+	\addcontentsline{toc}{chapter}{Remerciements}
+	
+Tout d’abord, on tient à exprimer nos vifs remerciements et notre profonde gratitude à toute personne ayant contribué, de près ou de loin, à la réalisation de ce projet et ayant fait de cette période un moment très profitable.\\
+	\newline 
+On tient particulièrement à remercier nos encadrants M. Mohammed EL KOUTBI et M. Mostafa BELKASMI, pour leur guide et leurs conseils, ainsi que pour leur encadrement durant toutes les phases de réalisation de ce projet.\\
+	\newline
+Nos remerciements vont aussi aux membres du jury, qui nous ont fait l'honneur d'accepter de juger notre travail.\\
+	\newline
+On tient à exprimer les purs sentiments de reconnaissance et de sincères remerciements à nos familles, qui nous ont soutenus moralement durant la réalisation du projet et qui ont favorisé son aboutissement.\\
+
+	%===========fin remerciement============
+
+
+
+
+
+	%===========résumer ====================
+	\chapter*{Résumé}
+	\addcontentsline{toc}{chapter}{Résumé}
+
+	Le présent document synthétise notre travail effectué durant le deuxième semestre de la deuxième année au titre du projet fédérateur S4, qui s’intitule \guillemotleft Conception et Implémentation des réseaux IP \guillemotright.\\
+	\newline
+Ce projet a pour mission de réaliser une étude globale de l'architecture réseau d'une société qui se compose d'un siège situer à Casablanca et d'une filiale à Rabat. Dans un premier temps notre travail consistait en une étude comparative pour les types de câbles et dispositives les mieux adapté en terme de coût et de performance pour construire l'architecture réseau la plus adapté pour cette société. Par la suite nous avons mis en place une architecture \ac{lan} du réseau du siège en utilsant le logiciel de simulation PACKET TRACER.Ainsi nous avons entamer sur l'implémentation de l'architecture \ac{wan} pour permetre la communication entre le siège et la filiale. Finalement on a renforcer la sécurité de notre architecture en utilisant plusieurs protocoles.
+
+	%=======================================
+
+
+	%===========résumer====================
+	\chapter*{Abstract}
+	\addcontentsline{toc}{chapter}{Abstract}
+	This document summarizes our work done during the second
+second year under the unifying project S4, entitled \guillemotleft Design and Implementation of IP Networks\guillemotright. \\
+	\newline
+This project's mission is to carry out a global study of the network architecture of
+a company consisting of a head office located in Casablanca and a subsidiary in Rabat. At first our work consisted of a comparative study for the types of cables and devices best suited in terms of cost and performance to build the most suitable network architecture for this company. Subsequently we implemented a \ac{lan} architecture of the headquarters network using the PACKET TRACER simulation software. So we start on the implementation of the \ac{wan} architecture to allow communication between the headquarters and the subsidiary. Finally we have to strengthen the security of our architecture using multiple protocols.
+	\newpage
+	%=======================================
+
+
+	%==========tables==========
+	\printacronyms[include-classes=abbrev,name=Abbreviations]
+	\listoffigures
+	\tableofcontents
+	%=========================
+
+	%===========introduction générale================
+	\chapter*{Introduction générale}
+	\addcontentsline{toc}{chapter}{Introduction générale}
+	Pour assurer une architecture réseau avec une bonne qualité de service, fiabilité, sécurité et avec un coût minimale nous avons réaliser ce projet dans plusieurs étapes. 
+	Notre cas d'étude est une société dans la filiale est situé à Rabat et le siège à Casablanca. Ce dernier est un batiment qui se composent de 4 étages, chaque étage continent huit salles et chaque salle à deux prises RJ45 \guillemotleft au milieu de la salle \guillemotright, la hauteur est de 3 mètre avec une surfae de 16*32 m\up{2}.
+	Ce rapport décrit donc l'essentiel du travail réalisé lors de ce projet. Il comporte quatre chapitres, le premier chapitre concerne le câblage de notre bâtiment et l'estimation globale du prix, le deuxième chapitre concerne l'architecture réseau locale. Quant au troisième chapitre. On va se focaliser sur la partie \ac{wan}, finalement le dernier chapitre, le plus important, emportera sur la sécurisation de notre réseau.
+	%===========fin introduction générale==============
+
+	
+
+	
+	
+
+
+
+
+
+	
+
+%========================chapitre 1===============================================
+		\chapter{Câblage du bâtiment et points d'accès}
+		
+		%========présentation du projet===============
+
+		
+		Notre cas d'étude est une société dans la filiale est situé à Rabat et le siège à Casablanca. Ce dernier est un batiment qui se composent de 4 étages, chaque étage continent huit salles et chaque salle à deux prises RJ45 \guillemotleft au milieu de la salle \guillemotright, la hauteur est de 3 mètre avec une surfae de 16*32 m\up{2}.
+
+		\section{Câblage horizontale : pair torsadé}
+		
+		\subsection{Etude Comparative}
+			Etude Comparative des différentes catégories de cables\\
+		\begin{itemize}
+
+			\item \textbf{cat 1:} applications de téléphonie bande passante 300-3400 hz 
+			\item \textbf{cat 2:} applications jusqu'à 1 Mb/s 
+			\item \textbf{cat 3:} applications type ethernet 10 Mb/s sur 100 mètres
+			\item \textbf{cat 4:} applications type token-ring 16 Mb/s 
+			\item \textbf{cat 5:} applications type ethernet 100 Mb/s sur 100 mètres 
+			\item \textbf{cat 5e:} applications type ethernet 2,5 Gb/s sur 100 mètres (10 Gb/s sur 30  mètres)
+			\item \textbf{cat 6:} applications type ethernet 5 Gb/s sur 100 mètres (10 Gb/s sur 55  mètres)
+			\item \textbf{cat 6a:} applications type ethernet 10 Gb/s sur 100 mètres
+			\item \textbf{cat 7:} applications type ethernet 100 gb/s	
+		\end{itemize}
+		\newpage
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.35]{./graphics/cat.png}
+			\caption{Catégories de cables}
+		\end{figure}
+
+
+		\begin{itemize}
+
+			\item  Entre les switchs de distributions et les switchs d'accès \textbf{l’\ac{utp} catégorie 6a} est la mieux adapté et la plus utilisé dans nos jours puisqu’elle a une
+bonne fréquence, et présente une meilleure économie d’énergie. 
+			\item Entre les switchs d'accès et les terminaux \textbf{l’UTP catégorie 5} est la mieux adapté puisque elle a moins de débit que l'UTP 6a est garenti un bon débit.	
+		\end{itemize}
+		
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.4]{./graphics/cable.png}
+			\caption{Câblage horizontal}
+		\end{figure}
+
+		On a opté pour une architecture de 3 niveaux:
+		\begin{itemize}
+			\item Un switch fédérateur qui lie entres les étages du batiment.
+			\item un switch de distribution pour chaque étage.
+			\item Deux switch d'accès pour chaque étage pour lier tout les terminaux.
+		\end{itemize}
+		
+		La figure 1.2 décrit la manière dont nous avont concu le câblage pour chaque étage.
+		
+		
+		\subsection{Estimation du coût}
+
+			La surface de la chambre circulaire est 16m*76m (2*pi*r/4=76m)
+			La surface de la chambre réctangulaire est 16*32 m\up{2}
+			La longueur du câble par étage à utilsé est donc :
+			\begin{itemize}
+				\item Du switch de distribution vers les switchs d'accès: 184m
+				\item Du switch d'accès vers les outlets: 604m
+			\end{itemize}
+			Pour tout le bâtiment il faut 184m de câble \ac{utp} 6a :
+				\textbf{184*6 = 1104 MAD}.\\
+			Pour tout le bâtiment il faut 604m de câble \ac{utp} 5 :
+				\textbf{604*5 = 3020 MAD}.\\
+			Le coût total pour le câblage horizontale est : \textbf{4124 MAD}
+		\newpage
+
+
+
+
+
+
+
+
+
+
+		\section{Câblage vertical : fibre optique}
+		
+		\subsection{Etude Comparative}
+			Les jarretières optiques sont composées généralement de deux fibres optiques protégées par
+une gaine et équipées à chaque extrémité d’un connecteur optique. Il existe deux type de
+fibres optiques : les fibres monomodes et les fibres multimodes.\\
+			\textbf{Fibre monomodes: } Les fibres monomodes sont utilisées pour des débits élevées
+ou pour de longues distances.\\
+			\textbf{Fibre multimodes: }  les fibres multimodes sont moins chers que les
+monomodes et sont utilisées sur des distances plus modestes.
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.6]{./graphics/fibre.png}
+			\caption{Fibre monomodes et multimodes}
+		\end{figure}
+
+		\begin{itemize}
+			\item La fibre multimode à une bande passante limitée et ne
+dois pas dépasser des distance de 5Km.
+			\item La fibre monomode à une très grande bande passante
+et est utilisée pour des distances supérieures à 5Km.
+			\item La fibre multimode à un coeur plus grand par rapport à
+la fibre monomode.
+			\item Plusieurs longueurs d’onde lumineuse circule dans la
+fibre multimode tandis qu’une seule onde lumineuse
+traverse la fibre monomode.
+		\end{itemize}
+		
+
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.45]{./graphics/mono.png}
+			\caption{Comparaison monomodes et multimodes}
+		\end{figure}
+
+
+
+		\begin{wrapfigure} {r}{7cm}
+		\includegraphics[scale=0.45]{./graphics/etages.png}
+		\end{wrapfigure}
+		On a choisi \textbf{la fibre optique multimode OM3} car on a un déport moyenne distance utilisé pour
+les réseaux Gigabits jusqu’à 10Gb/s.\\
+		\newline
+		Pour la fibre optique sachant que la hauteur d’un étage est de 3m et le switch fédérateur est
+positionné dans le 2 ème étage il nous faut : 13m.\\
+		\newline
+Le coût total pour la fibre optique est : 13*180=2340 MAD
+		
+		\section{Points d'accès}
+		Un point d'accès est un dispositif qui permet aux périphériques sans fil de se connecter à un réseau câble ou un réseau internet à l'aide connexion radio.\\
+		\newline
+
+		\begin{wrapfigure} {r}{3cm}
+		\includegraphics[scale=0.45]{./graphics/cercle.png}
+		\end{wrapfigure}
+		Les points d’accès utilisés dans la société on un rayon de r = 70m selon la loi de Pythagore a\up{2} = r\up{2}+r\up{2}
+Donc a=98.99, on prend a=100.\\
+On aura besoin de 3 points d'accès pour chaque étage positionné selon le schéma suivant :\\
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/wifi.png}
+			\caption{Point d'accès}
+		\end{figure}
+			
+		\section{Conclusion}
+			Les types de câblages les mieux adaptés à notre situation sont l’UTP catégorie 6a et l'UTP 5 pour le câblage horizontal et la fibre optique multimode OM3 pour le câblage vertical.
+Pour câbler l’immeuble, nous avons besoins de 13m verticalement, alors que pour câbler les étages d’un immeuble nous avons besoin de 788m avec un prix total de : \textbf{6464 MAD}.
+
+	
+
+
+			\newpage
+
+
+
+
+
+
+
+
+
+		\chapter{Architecture LAN}
+		\section{Mise en oeuvre du réseau local}
+		L’architecture réseau hiérarchique est la plus utilisé de nos jours, ceci est dû à plusieurs avantages parmi lesquels la scalibilité, la redondance, la performance, la sécurité et maintenabilité.\\
+		Un modèle de conception hiérarchique est recommandé car il est plus facile à gérer et à développer, et les problèmes sont résolus plus rapidement.\\
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.5]{./graphics/lan.png}
+			\caption{Architecture LAN}
+		\end{figure}
+		
+		\newpage		
+
+
+		\section{Protocoles}
+		\subsection{\ac{vlan}}
+		Le VLAN regroupe, de façon logique et indépendante, un ensemble de machines informatiques. On peut en retrouver plusieurs coexistant simultanément sur un même commutateur réseau.
+		Pour notre cas le batiment du siège est subdiviser en 4 vlans, un \ac{vlan} pour chaque étage.
+		Pour administrer et configurer les VLANs nous avons utilisé le protocole \ac{vtp} il permet d'ajouter, renommer ou supprimer un ou plusieurs vlans sur le seul switch maître et dans un domaine Vtp.\\
+
+		
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.5]{./graphics/vlan.png}
+			\caption{vlan}
+		\end{figure}
+
+		La figure si-dessus représente les VLANs associés aux différents étages.
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.5]{./graphics/server.png}
+			\caption{VTP serveur}
+		\end{figure}
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.5]{./graphics/client.png}
+			\caption{VTP client}
+		\end{figure}
+
+		Les figures si-dessus représentent la configuration du protocole VTP, le switch fédérateur étant le serveur VTP et les switchs de distributions et d'accès représentent les clients VTP.
+
+		\newpage
+
+
+		\subsection{\ac{stp}}
+		Afin d'assurer qu'il n'y a pas de boucles dans un contexte de liaisons redondantes (convergentes) entre des matériels de couche 2 et de les bloquer et les détruire si besoin. Les réseaux doivent avoir un unique chemin entre 2 points. Un bon réseau doit aussi inclure une redondance des matériels pour fournir un chemin alternatif en cas de panne. C'est la STP détecte et désactive des boucles de réseau en fournissant un mécanisme de liens de backup. Il permet de faire en sorte que des matériels compatibles avec le standard ne fournissent qu'un seul chemin entre deux stations d'extrémité. 
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.5]{./graphics/stp.png}
+			\caption{Configuration du protocole STP}
+		\end{figure}
+
+		La figure si-dessus représente la configuration du protocole STP dans le switch fédérateur. Pour avons configurer le protocole STP pour tout les VLANs.
+
+		\subsection{\ac{dhcp}}
+		Il s'agit d'un protocole qui permet à un ordinateur qui se connecte sur un réseau d'obtenir dynamiquement sa configuration principalement, sa configuration réseau (adresse IP, passerelle par défaut, adresse serveur \ac{dns}).
+
+		\newpage 
+
+		Nous avons configurer un pool pour chaque réseau notamment pour les Vlans du siège et le LAN de la filiale.
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.5]{./graphics/dhcp.png}
+			\caption{DHCP sur le routeur du siège}
+		\end{figure}
+		La figure si-dessus représente la configuration du protocole \ac{dhcp} sur le routeur internal du siège.
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.5]{./graphics/dhcp1.png}
+			\caption{DHCP sur le routeur de la filiale}
+		\end{figure}
+		La figure si-dessus représente la configuration du protocole \ac{dhcp} sur le routeur de la filiale.
+
+		\section{Conclusion}
+Dans ce chapitre nous avons présenté l'architecture LAN basée sur un modèle hiérarechique de 3 niveaux en implémentant les trois protocoles VTP, STP et DCHP. Les besoins de l'entreprise exige une interconnection réseau avec le monde extérieur autrement dis Internet ainsi que la filiale situer à Rabat. Dans le chapitre suivant nous allons répondre à ces besoins avec une architecture \ac{wan}.	
+		
+
+		\newpage
+		%=================objectif==================
+		
+		
+		\chapter{Architecture WAN}
+		Ce chapitre décrit l’architecture WAN qui inclut le type de routage utilisé entre le bâtiment de Casablanca \guillemotleft Siège \guillemotright et Rabat  \guillemotleft Filiale \guillemotright, la configuration des serveurs WEB et \ac{dns} et finalement la translation des adresses via le \ac{nat}.
+
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.35]{./graphics/wan.png}
+			\caption{Architecture WAN}
+		\end{figure}
+
+		Nous avons considéré internet comme étant trois routeur [EST, CORE et WEST] liés par des lignes séries et configurés avec le protocole \ac{ospf}.\\
+		Nous avons configuré le protocole \ac{ppp} dans les lignes séries avec l’option CHAP entre les Routeurs Casa et EST, Rabat et WEST puisqu’elle représente une forte authentification.
+
+		\section{Architecture \ac{dmz}}
+		Une zone démilitarisée ou DMZ est un sous-réseau séparé du réseau local et isolé de celui-ci et d'Internet par un pare-feu. Ce sous-réseau contient les machines étant susceptibles d'être accédées depuis Internet.\\
+		On a rajouté deux serveurs : DNS et WEB relié par un switch qui se place entre les deux routeurs de Casablanca et Internal.
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.27]{./graphics/web.png}
+			\caption{Connexion au serveur WEB et DNS}
+		\end{figure}
+
+		\section{PAT}
+		Le \ac{pat} est la technique basée sur le NAT dynamique.  Il Effectue une translation des ports IP entre un réseau interne  privé ou intranet et une Adresse IP sur internet. Tout simplement Le PAT est un Nat dynamique + une translation d'adresse basée sur les Ports. Nous avons utilsé le PAT sur les routeurs Internal et Rabat.
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.55]{./graphics/nat.png}
+			\caption{Translations d'adresses}
+		\end{figure}
+
+		\section{Conclusion}
+		Nous avons utilisé le PAT pour traduire l’adresse réseau privée en réseau public pour permettre au LAN de sortir à l'internet, nous avons configurer un serveur WEB et un serveur DNS sur une DMZ et nous avons configurer le protocole PPP avec CHAP sur les lignes séries.\\
+		Dans le chapitre suivant nous allons introduire quelques aspects de sécurité.
+
+		%===============specification des besoins===========================
+		\chapter{Sécurité Réseaux}
+		Ce chapitre décrit les techniques employées pour garantir une bonne sécurité de notre architecture réseau.
+
+		\section{Acces Control List (\ac{acl}) }
+		Pour limiter l’accès à internet pour le VLAN-flour2 on a utilisé l’Access liste suivante : \\
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/acl2.png}
+			\caption{ACL VLAN 2}
+		\end{figure}
+		\newline
+		La figure si-dessus représente l'ACL utilsé pour interdire le VLAN 2 d'accéder à internet, la première ligne pour autoriser la communication entre les VLANs et le reste pour autoriser le VLAN 2 d'accèder au DMZ.\\
+		\newline
+		Pour autorisez l’accès depuis Internet vers la DMZ juste pour les services DNS et WEB nous avons utilisé l'ACL suivante : \\
+		\newline
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/acl1.png}
+			\caption{ACL Internet}
+		\end{figure}
+		
+		\newpage
+		Les trois première ligne autorise l'accès depuis internet vers la DMZ pour les services DNS et WEB, alors que la dernière ligne autorise l'accès si seulement si la connexion est déjà établie depuis le LAN.
+
+		\section{\ac{ssh}}
+Secure Shell (SSH) est à la fois un programme informatique et un protocole de communication sécurisé. Le protocole de connexion impose un échange de clés de chiffrement en début de connexion. Par la suite, tous les segments TCP sont authentifiés et chiffrés. Il devient donc impossible d'utiliser un sniffer pour voir ce que fait l'utilisateur.
+		Pour notre cas nous avons limité l'accès ssh pour les switchs et les routeurs Internal, Casa et Rabat. Seule l'administrateur pourra y accéder à distance.
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/ssh.png}
+			\caption{SSH activer}
+		\end{figure}
+
+		Voici l'ACL utilisé pour autoriser l'accès juste pour l'administrateur :
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/ss2.png}
+			\caption{ACL accès SSH}
+		\end{figure}
+		\newpage
+		La figure si-dessous montre une connexion à distance via SSH depuis la machine de l'administrateur :
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/ssh3.png}
+			\caption{Connexion via SSH}
+		\end{figure}
+
+
+		\section{Configuration du Tunnel \ac{vpn}}		
+		Un VPN (Virtual Private Network) est un réseau virtuel s’appuyant sur un autre réseau comme Internet. Il permet de faire transiter des informations, entre les différents membres de ce VPN, le tout de manière sécurisée.\\
+On peut considérer qu’une connexion VPN revient à se connecter en réseau local mais en utilisant Internet. On peut ainsi communiquer avec les machines de ce réseau en prenant comme adresse de destination, l’adresse IP local de la machine que l’on veut atteindre.\\
+Il existe plusieurs types de VPN fonctionnant sur différentes couches réseau, mais on a choisi IPSEC tunnel vu puisqu'il est plus efficace que les autres types en termes de performance, car contre il est très contraignant au niveau de la mise en place.\\
+	\newpage
+Pour vérifier que le VPN fonctionne sur nos routeurs de Casa et Rabat, on vérifie les informations retournées par la commande suivante:
+
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/vpn.png}
+			\caption{Tunnel VPN}
+		\end{figure}
+		\newpage
+
+
+		Nous éditons l’ACL du NAT déjà existante qui s’appelle LAN pour interdire la translation d’adresse vers le LAN distant. De cette façon aucune adresse IP source à destination de RABAT ne sera changée. Néanmoins si la destination est autre que RABAT, les adresses IP sources seront translatées.
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/aclnat.png}
+			\caption{ACL du NAT}
+		\end{figure}
+
+		Translation d'adresse vers un LAN distant: 
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.7]{./graphics/trans.png}
+			\caption{Ping vers Internet}
+		\end{figure}
+
+		Translation d'adresse vers le LAN de Rabat:
+		\begin{figure}[!hbtp]
+			\centering
+			\includegraphics[scale=0.5]{./graphics/ntrans.png}
+			\caption{Ping vers le LAN de Rabat}
+		\end{figure}
+
+
+
+		\newpage
+		%============conclusion========================
+		\section{Conclusion générale}
+		Ce projet avait pour but majeur la solidification et la mise en
+pratique de l’ensemble des compétences théoriques et techniques acquises durant la deuxième année filière IWIM. Il
+consistait à concevoir une architecture réseau complète d’un bâtiment d’une entreprise qui se compose de quatres étages dont chacun comporte huit salles. Tout d'abord nous avons commencer par identifié les besoins de notre architecture en terme d'équipements et de câblages ce qui nous a mener a faire une étude comparative des différents type de câbles non seulement en terme de performances mes aussi en terme de coût.
+L'architecture finalement choisis est une architecture hiérarechique de trois niveaux en utilisant pour le câblage vertical la fibre optique multimode OM3  et pour le câblage horizontal une pair torsadé catégorie UTP 6a et UTP 5.\\
+Nous avons mis en oeuvre l'architecture LAN on créant un VLAN pour chacun des quatres étages on utilisant le protocole VTP, pour éliminer les boucles nous avons utilisé le protocole STP et finalement pour distribuer automatiquement la configuration de base à savoir l'adresse IP, le DNS et la passerelle nous avons utilisé le protocole DHCP.\\
+On ce qui concerne l'architecture WAN nous avons commencer par configurer la DMZ qui contient un serveur WEB et DNS, nous avons considéré l'internet comme étant 3 routeur avec comme routage dynamique OSPF.On a configuré le PAT pour sortir via internet à l’aide d’une adresse publique.\\
+Pour sécurisé notre réseau d'abord on utilisant une authentification avec CHAP entre les routeurs d'extrémités et internet, puis nous avons rajouter des ACL pour assurer l'identification et on a renforcé la sécurité en utilisant le VPN basé sur le cryptage AES et l'authentification SHA2, finalement pour autoriser l'administrateur de gérer à distance et de manière sécurisé les équipements réseaux nous avons utilisé le protocole SSH.\\
+Ce projet nous a permis de se familiariser premièrement avec les différents concepts de câblages, ainsi que les différents protocoles de commutations et de routages, nous avons aussi pu s’enrichir encore plus dans le cryptage et l’authentification pour renforcer la sécurité de notre architecture réseau.\\
+
+%==================================fin chapitre 1 ====================================
+
+
+
+
+
+	
+	\chapter*{Bibliographie/Webographie}
+	\addcontentsline{toc}{chapter}{Bibliographie/Webographie}
+	\bibliographystyle{plain}
+	\vspace{2cm}
+
+	  \begin{itemize}
+	 		\item \textbf{Cours: } \newline
+	 		[1] Mohammed EL KOUTBI, Technique de routages, 2016. \newline
+			[2] Mohammed EL KOUTBI, Technique de commutation, 2016. \newline
+			[3] Mostafa BELKASMI, Cryptographie, 2018. \newline
+			\item \textbf{Références: } \newline
+			[w1] Configuration NAT https://www.ciscomadesimple.be/ \newline
+			[w2] Définition des protocoles disponible http://www.infonitec.com/ \newline
+			[w3] Configuration VPN https://ciscotracer.wordpress.com/2017/03/22/vpn-site-site/ \newline
+		\end{itemize}
+	\end{document}
